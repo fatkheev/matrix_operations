@@ -1,8 +1,12 @@
 #include "../s21_matrix.h"
 
 int s21_determinant(matrix_t *A, double *result) {
-    if (A == NULL || result == NULL || A->rows != A->columns) {
-        return 1; // Ошибка, некорректная матрица
+    if (A == NULL || result == NULL) {
+        return 1; // Ошибка, матрица или результат являются NULL
+    }
+
+    if (A->rows != A->columns) {
+        return 2; // Ошибка, некорректная матрица (не квадратная)
     }
 
     int n = A->rows;

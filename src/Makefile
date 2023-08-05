@@ -1,7 +1,7 @@
 CC = gcc
 TESTFLAGS = -lcheck -g
-CFLAGS = -Wall -Wextra -Werror -std=c11
-TESTFLAGS2 = -I /opt/homebrew/Cellar/check/0.15.2/include -L/opt/homebrew/lib -lcheck -lm -lpthread -lrt -lsubunit -g
+CFLAGS = -Wall -Wextra -Werror -std=c11 -I /opt/homebrew/Cellar/check/0.15.2/include -L/opt/homebrew/lib -lcheck
+TESTFLAGS2 = -lcheck -lm -lpthread -lrt -lsubunit -g
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
 
 all: test

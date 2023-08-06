@@ -36,4 +36,12 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
 // Транспонирование матрицы (transpose):
 int s21_transpose(matrix_t *A, matrix_t *result);
 
+// Определитель матрицы (determinant):
 int s21_determinant(matrix_t *A, double *result);
+
+// Минор матрицы и матрица алгебраических дополнений (calc_complements):
+int s21_minor(matrix_t *A, int row, int col, double *result);
+int s21_calc_complements(matrix_t *A, matrix_t *result);
+
+// Обратная матрица (inverse_matrix):
+int s21_inverse_matrix(matrix_t *A, matrix_t *result);

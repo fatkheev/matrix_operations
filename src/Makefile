@@ -11,7 +11,7 @@ s21_matrix.a : func/*.c
 	ar rcs s21_matrix.a *.o
 	rm -rf *.o
 
-test: tests/test.c func/*.c
+test: clean tests/test.c func/*.c
 	$(CC) $(CFLAGS) tests/test.c func/*.c -o test $(TESTFLAGS)
 	./test
 

@@ -150,7 +150,7 @@ START_TEST(create_NOTCORRECT) {
 }
 END_TEST
 
-// Сравнение матриц
+// // Сравнение матриц
 
 START_TEST(eq_matrix_identical) {
   matrix_t A = {0};
@@ -337,7 +337,8 @@ START_TEST(not_eq_2) {
 }
 END_TEST
 
-// Суммирование матриц
+// // Суммирование матриц
+
 START_TEST(sub_matrix_same_size) {
   matrix_t A = {0};
   matrix_t B = {0};
@@ -873,7 +874,7 @@ START_TEST(sub_null) {
 }
 END_TEST
 
-// // Умножение матрицы на матрицу
+// // // Умножение матрицы на матрицу
 START_TEST(test_mult_null_A) {
   matrix_t *A = NULL, B, result;
   s21_create_matrix(2, 2, &B);
@@ -935,76 +936,76 @@ START_TEST(test_mult_identity) {
 }
 END_TEST
 
-// START_TEST(mult_matrix) {
-//   const int rows = rand() % 100 + 1;
-//   const int cols = rand() % 100 + 1;
-//   matrix_t m = {0};
-//   s21_create_matrix(rows, cols, &m);
-//   matrix_t mtx = {0};
-//   s21_create_matrix(cols, rows, &mtx);
+START_TEST(mult_matrix) {
+  const int rows = rand() % 100 + 1;
+  const int cols = rand() % 100 + 1;
+  matrix_t m = {0};
+  s21_create_matrix(rows, cols, &m);
+  matrix_t mtx = {0};
+  s21_create_matrix(cols, rows, &mtx);
 
-//   for (int i = 0; i < rows; ++i)
-//     for (int j = 0; j < cols; ++j) m.matrix[i][j] = get_rand(-10e10, 10e10);
+  for (int i = 0; i < rows; ++i)
+    for (int j = 0; j < cols; ++j) m.matrix[i][j] = get_rand(-10e10, 10e10);
 
-//   for (int i = 0; i < cols; ++i)
-//     for (int j = 0; j < rows; ++j) mtx.matrix[i][j] = get_rand(-10e10,
-//     10e10);
+  for (int i = 0; i < cols; ++i)
+    for (int j = 0; j < rows; ++j) mtx.matrix[i][j] = get_rand(-10e10,
+    10e10);
 
-//   matrix_t check = {0};
-//   s21_create_matrix(m.rows, mtx.columns, &check);
+  matrix_t check = {0};
+  s21_create_matrix(m.rows, mtx.columns, &check);
 
-//   for (int i = 0; i < m.rows; ++i) {
-//     for (int j = 0; j < mtx.columns; ++j) {
-//       check.matrix[i][j] = 0;
-//       for (int k = 0; k < m.columns; ++k) {
-//         check.matrix[i][j] += m.matrix[i][k] * mtx.matrix[k][j];
-//       }
-//     }
-//   }
+  for (int i = 0; i < m.rows; ++i) {
+    for (int j = 0; j < mtx.columns; ++j) {
+      check.matrix[i][j] = 0;
+      for (int k = 0; k < m.columns; ++k) {
+        check.matrix[i][j] += m.matrix[i][k] * mtx.matrix[k][j];
+      }
+    }
+  }
 
-//   matrix_t res = {0};
-//   ck_assert_double_eq(s21_mult_matrix(&m, &mtx, &res), OK);
-//   ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
+  matrix_t res = {0};
+  ck_assert_double_eq(s21_mult_matrix(&m, &mtx, &res), OK);
+  ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
 
-//   s21_remove_matrix(&m);
-//   s21_remove_matrix(&mtx);
-//   s21_remove_matrix(&res);
-//   s21_remove_matrix(&check);
-// }
-// END_TEST
+  s21_remove_matrix(&m);
+  s21_remove_matrix(&mtx);
+  s21_remove_matrix(&res);
+  s21_remove_matrix(&check);
+}
+END_TEST
 
-// START_TEST(mult_NOTCORRECT_matrix_1) {
-//   matrix_t m1 = {0};
-//   matrix_t m2 = {0};
-//   s21_create_matrix(5, 5, &m1);
-//   s21_create_matrix(6, 6, &m2);
+START_TEST(mult_NOTCORRECT_matrix_1) {
+  matrix_t m1 = {0};
+  matrix_t m2 = {0};
+  s21_create_matrix(5, 5, &m1);
+  s21_create_matrix(6, 6, &m2);
 
-//   matrix_t result = {0};
-//   int mul_code = s21_mult_matrix(&m1, &m2, &result);
-//   ck_assert_int_eq(mul_code, ERROR_CALC);
+  matrix_t result = {0};
+  int mul_code = s21_mult_matrix(&m1, &m2, &result);
+  ck_assert_int_eq(mul_code, ERROR_CALC);
 
-//   s21_remove_matrix(&m1);
-//   s21_remove_matrix(&m2);
-//   s21_remove_matrix(&result);
-// }
-// END_TEST
+  s21_remove_matrix(&m1);
+  s21_remove_matrix(&m2);
+  s21_remove_matrix(&result);
+}
+END_TEST
 
-// START_TEST(mult_NOTCORRECT_matrix_2) {
-//   matrix_t m1 = {0};
-//   matrix_t m2 = {0};
-//   s21_create_matrix(5, 5, &m1);
-//   s21_create_matrix(6, 6, &m2);
-//   m1.columns = -100;
+START_TEST(mult_NOTCORRECT_matrix_2) {
+  matrix_t m1 = {0};
+  matrix_t m2 = {0};
+  s21_create_matrix(5, 5, &m1);
+  s21_create_matrix(6, 6, &m2);
+  m1.columns = -100;
 
-//   matrix_t result = {0};
-//   int mul_code = s21_mult_matrix(&m1, &m2, &result);
-//   ck_assert_int_eq(mul_code, ERROR_CALC);
+  matrix_t result = {0};
+  int mul_code = s21_mult_matrix(&m1, &m2, &result);
+  ck_assert_int_eq(mul_code, ERROR_CALC);
 
-//   s21_remove_matrix(&m1);
-//   s21_remove_matrix(&m2);
-//   s21_remove_matrix(&result);
-// }
-// END_TEST
+  s21_remove_matrix(&m1);
+  s21_remove_matrix(&m2);
+  s21_remove_matrix(&result);
+}
+END_TEST
 
 // START_TEST(mult_matrix_test_1) {
 //   matrix_t A, B, R, R2;
@@ -1067,11 +1068,11 @@ END_TEST
 // }
 // END_TEST
 
-// START_TEST(mult_matrix_test_null) {
-//   matrix_t *A = NULL, *B = NULL, *R = NULL;
-//   ck_assert_int_eq(s21_mult_matrix(A, B, R), NOTCORRECT);
-// }
-// END_TEST
+START_TEST(mult_matrix_test_null) {
+  matrix_t *A = NULL, *B = NULL, *R = NULL;
+  ck_assert_int_eq(s21_mult_matrix(A, B, R), NOTCORRECT);
+}
+END_TEST
 
 // Умножение матрицы на число
 START_TEST(test_mult_float) {
@@ -1283,14 +1284,16 @@ START_TEST(mult_number_test_3) {
 }
 END_TEST
 
-// START_TEST(null_mult_num) {
-//   matrix_t *B = NULL;
-//   double num = 0;
-//   matrix_t *R = NULL;
-//   int res = s21_mult_number(B, num, R);
-//   ck_assert_int_eq(res, NOTCORRECT);
-// }
-// END_TEST
+START_TEST(null_mult_num) {
+  matrix_t *B = NULL;
+  double num = 0;
+  matrix_t *R = NULL;
+  int res = s21_mult_number(B, num, R);
+  ck_assert_int_eq(res, NOTCORRECT);
+}
+END_TEST
+
+//Транспонирование матрицы
 
 // START_TEST(transpose_test_1) {
 //   matrix_t A, B, R;
@@ -2176,44 +2179,16 @@ Suite
   TCase *tCase = tcase_create("s21_matrix");
 
   // Создание и удаление матрицы
-  tcase_add_test(
-      tCase,
-      create_matrix_positive);  // Функция успешно создает матрицу с
-                                // положительным количеством строк и столбцов
-  tcase_add_test(tCase, create_matrix_single_element);  // Функция может создать
-                                                        // матрицу размером 1x1
-  tcase_add_test(
-      tCase,
-      create_matrix_rectangle);  // Функция может создать прямоугольную матрицу
-  tcase_add_test(
-      tCase,
-      create_matrix_large);  // Функция может обработать большую матрицу (в
-                             // данном случае, матрицу размером 1000x1000
-  tcase_add_test(
-      tCase,
-      create_matrix_zero_rows);  // Функция возвращает ошибку, если пытаться
-                                 // создать матрицу с нулевым количеством строк
-  tcase_add_test(tCase,
-                 create_matrix_zero_cols);  // Функция возвращает ошибку, если
-                                            // пытаться создать матрицу с
-                                            // нулевым количеством столбцов
-  tcase_add_test(
-      tCase, create_matrix_negative_rows);  // Функция возвращает ошибку, если
-                                            // пытаться создать матрицу с
-                                            // отрицательным количеством строк
-  tcase_add_test(
-      tCase,
-      create_matrix_negative_cols);  // Функция возвращает ошибку, если пытаться
-                                     // создать матрицу с отрицательным
-                                     // количеством столбцов
-  tcase_add_test(
-      tCase, create_matrix_zero_size);  // Функция возвращает ошибку, если
-                                        // пытаться создать матрицу с нулевым
-                                        // количеством строк и столбцов
-  tcase_add_test(
-      tCase, create_matrix_null_pointer);  // Функция возвращает ошибку, если
-                                           // передать в качестве аргумента NULL
-                                           // указатель на матрицу
+  tcase_add_test(tCase, create_matrix_positive);
+  tcase_add_test(tCase, create_matrix_single_element);
+  tcase_add_test(tCase, create_matrix_rectangle);
+  tcase_add_test(tCase, create_matrix_large);
+  tcase_add_test(tCase, create_matrix_zero_rows);
+  tcase_add_test(tCase, create_matrix_zero_cols);
+  tcase_add_test(tCase, create_matrix_negative_rows);
+  tcase_add_test(tCase, create_matrix_negative_cols);
+  tcase_add_test(tCase, create_matrix_zero_size);
+  tcase_add_test(tCase, create_matrix_null_pointer);
 
   tcase_add_test(tCase, create_matrix);
   tcase_add_test(tCase, create_normal);
@@ -2222,66 +2197,32 @@ Suite
   tcase_add_test(tCase, create_NOTCORRECT);
 
   // Сравнение матриц
-  tcase_add_test(tCase,
-                 eq_matrix_identical);  // Сравнение двух одинаковых матриц
-  tcase_add_test(tCase,
-                 eq_matrix_different);  // Сравнение двух различных матриц
-  tcase_add_test(
-      tCase, eq_matrix_diff_sizes);  // Сравнение матриц с разными размерами.
-  tcase_add_test(
-      tCase, eq_matrix_near_equal);  // Сравнение матрицы со значениями, которые
-                                     // отличаются меньше, чем на 0.0000001
-  tcase_add_test(
-      tCase, eq_matrix_null_pointer);  // Сравнение матрицы с нулевым указателем
-  tcase_add_test(
-      tCase, eq_matrix_identical_single_element);  // Сравнение двух одинаковых
-                                                   // матриц с одним элементом
-  tcase_add_test(
-      tCase,
-      eq_matrix_identical_one_column);  // Сравнение двух одинаковых матриц с
-                                        // двумя строками и одной колонкой
-  tcase_add_test(
-      tCase, eq_matrix_null_pointer_vs_matrix);  // Сравнение матрицы с нулевым
-                                                 // указателем и матрицы с одним
-                                                 // элементом
-  tcase_add_test(
-      tCase,
-      eq_matrix_different_same_size);  // Сравнение двух разных матриц, имеющих
-                                       // одинаковые размеры, но разные элементы
-  tcase_add_test(
-      tCase, eq_matrix_zero_size_vs_normal);  // Сравнение двух матриц, где одна
-                                              // из матриц имеет размер 0x0
+  tcase_add_test(tCase, eq_matrix_identical);
+  tcase_add_test(tCase, eq_matrix_different);
+  tcase_add_test(tCase, eq_matrix_diff_sizes);
+  tcase_add_test(tCase, eq_matrix_near_equal);
+  tcase_add_test(tCase, eq_matrix_null_pointer);
+  tcase_add_test(tCase, eq_matrix_identical_single_element);
+  tcase_add_test(tCase, eq_matrix_identical_one_column);
+  tcase_add_test(tCase, eq_matrix_null_pointer_vs_matrix);
+  tcase_add_test(tCase, eq_matrix_different_same_size);
+  tcase_add_test(tCase, eq_matrix_zero_size_vs_normal);
 
   tcase_add_test(tCase, eq_matrix);
   tcase_add_test(tCase, not_eq_1);
   tcase_add_test(tCase, not_eq_2);
 
-  // Суммирование матриц
-  tcase_add_test(tCase, sum_matrix_same_size);  // Матрицы одинакового размера
-  tcase_add_test(tCase,
-                 sum_matrix_different_size);  // Функция вернет ошибку, если
-                                              // размеры матриц различны
-  tcase_add_test(tCase, sum_matrix_null_A);  // Функция вернет ошибку, если
-                                             // первая матрица равна NULL
-  tcase_add_test(tCase, sum_matrix_null_B);  // Функция вернет ошибку, если
-                                             // вторая матрица равна NULL
-  tcase_add_test(tCase, sum_matrix_null_result);  // Функция вернет ошибку, если
-                                                  // выходная матрица равна NULL
-  tcase_add_test(tCase,
-                 sum_matrix_large);  // Функция справляется с большими матрицами
-  tcase_add_test(tCase,
-                 sum_matrix_negative_value);  // Функция корректно обрабатывает
-                                              // отрицательные значения
-  tcase_add_test(tCase,
-                 sum_matrix_zero_value);  // Функция корректно обрабатывает
-                                          // нулевые значения
-  tcase_add_test(tCase,
-                 sum_matrix_positive_value);  // Функция корректно обрабатывает
-                                              // положительные значения
-  tcase_add_test(
-      tCase,
-      sum_matrix_single_element);  // Функция корректно работает с матрицами,
-                                   // состоящими из одного элемента
+  // // Суммирование матриц
+  tcase_add_test(tCase, sum_matrix_same_size);
+  tcase_add_test(tCase, sum_matrix_different_size);
+  tcase_add_test(tCase, sum_matrix_null_A);
+  tcase_add_test(tCase, sum_matrix_null_B);
+  tcase_add_test(tCase, sum_matrix_null_result);
+  tcase_add_test(tCase, sum_matrix_large);
+  tcase_add_test(tCase, sum_matrix_negative_value);
+  tcase_add_test(tCase, sum_matrix_zero_value);
+  tcase_add_test(tCase, sum_matrix_positive_value);
+  tcase_add_test(tCase, sum_matrix_single_element);
 
   tcase_add_test(tCase, sum_matrix);
   tcase_add_test(tCase, sum_matrix_1);
@@ -2291,84 +2232,48 @@ Suite
   tcase_add_loop_test(tCase, sum_matrix, 0, 10);
 
   // Вычитание матриц
-  tcase_add_test(tCase,
-                 sub_matrix_same_size);  // Функция корректно обрабатывает
-                                         // матрицы одинакового размера
-  tcase_add_test(
-      tCase, sub_matrix_diff_size);  // Функция возвращает код ошибки 2, если
-                                     // размеры матриц A и B не совпадают
-  tcase_add_test(tCase, sub_matrix_null_A);  // Функция возвращает код ошибки 1,
-                                             // если матрица A равна NULL
-  tcase_add_test(tCase, sub_matrix_null_B);  // Функция возвращает код ошибки 1,
-                                             // если матрица B равна NULL
-  tcase_add_test(tCase,
-                 sub_matrix_null_result);  // Функция возвращает код ошибки 1,
-                                           // если матрица result равна NULL
-  tcase_add_test(tCase,
-                 sub_matrix_single_element);  // Функция корректно обрабатывает
-                                              // матрицы размером 1x1
-  tcase_add_test(tCase,
-                 sub_matrix_zero_rows);  // Функция возвращает код ошибки 1,
-                                         // если матрицы имеют ноль строк
-  tcase_add_test(tCase,
-                 sub_matrix_zero_columns);  // Функция возвращает код ошибки 1,
-                                            // если матрицы имеют ноль столбцов
-  tcase_add_test(
-      tCase,
-      sub_matrix_large);  // Функция корректно обрабатывает большие матрицы
-  tcase_add_test(
-      tCase,
-      sub_matrix_negative_values);  // Функция корректно обрабатывает матрицы,
-                                    // содержащие отрицательные значения
+  tcase_add_test(tCase, sub_matrix_same_size);
+  tcase_add_test(tCase, sub_matrix_diff_size);
+  tcase_add_test(tCase, sub_matrix_null_A);
+  tcase_add_test(tCase, sub_matrix_null_B);
+  tcase_add_test(tCase, sub_matrix_null_result);
+  tcase_add_test(tCase, sub_matrix_single_element);
+  tcase_add_test(tCase, sub_matrix_zero_rows);
+  tcase_add_test(tCase, sub_matrix_zero_columns);
+  tcase_add_test(tCase, sub_matrix_large);
+  tcase_add_test(tCase, sub_matrix_negative_values);
 
   tcase_add_test(tCase, sub_test_1);
   tcase_add_test(tCase, sub_test_2);
   tcase_add_test(tCase, sub_test_NOTCORRECT_matrix);
   tcase_add_test(tCase, sub_null);
 
-  // Умножение матрицы на число
-  tcase_add_test(tCase, test_mult_float);  // Функция корректно работает с
-                                           // числами с плавающей запятой
-  tcase_add_test(
-      tCase, test_mult_large);  // Функция справляется с числами, которые
-                                // приближаются к границам допустимых значений
-  tcase_add_test(
-      tCase, test_mult_small);  // Функция может обрабатывать значения, которые
-  // приближаются к пределу точности представления чисел с плавающей запятой
-  tcase_add_test(tCase, test_mult_random);  // Функция корректно работает в
-  // общем случае
-  tcase_add_test(tCase, test_mult_zero_result);  // Функция
-  // возвращает матрицу с нулевыми элементами, когда все элементы исходной
-  // матрицы равны нулю, независимо от значения множителя
+  // // Умножение матрицы на число
+  tcase_add_test(tCase, test_mult_float);
+  tcase_add_test(tCase, test_mult_large);
+  tcase_add_test(tCase, test_mult_small);
+  tcase_add_test(tCase, test_mult_random);
+  tcase_add_test(tCase, test_mult_zero_result);
 
   tcase_add_loop_test(tCase, mult_number_matrix, 0, 100);
   tcase_add_test(tCase, mult_number_test_1);
   tcase_add_test(tCase, mult_number_test_2);
   tcase_add_test(tCase, mult_number_test_3);
-  // tcase_add_test(tCase, null_mult_num);
+  tcase_add_test(tCase, null_mult_num);
 
-  // // Умножение матрицы на матрицу
-  tcase_add_test(tCase, test_mult_null_A);  // Функция правильно обрабатывает
-  // ситуацию, когда в качестве первого аргумента передается NULL
-  tcase_add_test(tCase, test_mult_null_B);  // Функция корректно обрабатывает
-  // ситуацию, когда в качестве второго аргумента передается NULL
-  tcase_add_test(tCase, test_mult_null_result);  // Функция корректно
-  // обрабатывает ситуацию, когда в качестве третьего аргумента (матрицы для
-  // хранения результата) передается NULL
-  tcase_add_test(
-      tCase,
-      test_mult_incompatible_dim);  // Функция корректно обрабатывает ситуацию,
-  // когда количество столбцов первой матрицы не совпадает с количеством строк
-  // второй матрицы (т.е. матрицы несовместимы для умножения).
-  tcase_add_test(tCase, test_mult_identity);  // Функция корректно умножает
-  // матрицу на единичную матрицу
+  // Умножение матрицы на матрицу
+  tcase_add_test(tCase, test_mult_null_A);
+  tcase_add_test(tCase, test_mult_null_B);
+  tcase_add_test(tCase, test_mult_null_result);
+  tcase_add_test(tCase, test_mult_incompatible_dim);
+  tcase_add_test(tCase, test_mult_identity);
 
-  // tcase_add_loop_test(tCase, mult_matrix, 0, 100);
-  // tcase_add_test(tCase, mult_NOTCORRECT_matrix_1);
-  // tcase_add_test(tCase, mult_NOTCORRECT_matrix_2);
+  tcase_add_loop_test(tCase, mult_matrix, 0, 100);
+  tcase_add_test(tCase, mult_NOTCORRECT_matrix_1);
+  tcase_add_test(tCase, mult_NOTCORRECT_matrix_2);
   // tcase_add_test(tCase, mult_matrix_test_1);
   // tcase_add_test(tCase, mult_matrix_test_2);
-  // tcase_add_test(tCase, mult_matrix_test_null);
+  tcase_add_test(tCase, mult_matrix_test_null);
 
   // /*MATRIX_TRANSPOSE*/
 
@@ -2427,12 +2332,15 @@ Suite
 }
 
 int main() {
-  int count_failed;
   Suite *suite = s21_matrix_test();
   SRunner *sRunner = srunner_create(suite);
   srunner_set_fork_status(sRunner, CK_NOFORK);
   srunner_run_all(sRunner, CK_VERBOSE);
-  count_failed = srunner_ntests_failed(sRunner);
+  int total_tests = srunner_ntests_run(sRunner);
+  int failed_tests = srunner_ntests_failed(sRunner);
   srunner_free(sRunner);
-  return (count_failed == 0) ? 0 : 1;
+  printf("\nВсего тестов: %d\n", total_tests);
+  printf("Провалено тестов: %d\n", failed_tests);
+
+  return (failed_tests == 0) ? 0 : 1;
 }

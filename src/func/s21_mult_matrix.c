@@ -1,29 +1,35 @@
 #include "../s21_matrix.h"
 
 int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
-    int return_code = 0;
+    // Если любая из матриц равна NULL, возвращаем ошибку
+    if (A == NULL || B == NULL || result == NULL) {
+        return 1;
+    }
 
-    if (A == NULL || B == NULL || result == NULL || A->columns != B->rows) {
-        if (A == NULL || B == NULL || result == NULL) {
-            return_code = 1;
-        } else {
-            return_code = 2;
-        }
-    } else {
-        s21_remove_matrix(result); // Освободите память для результата перед созданием новой матрицы
-        if (s21_create_matrix(A->rows, B->columns, result) == 0) {
+    // Проверка на корректность размеров матрицы A
+    if (!(A->matrix != NULL && A->rows > 0 && A->columns > 0)) {
+        return 2;
+    }
+
+    // Проверка на корректность размеров матрицы B
+    if (!(B->matrix != NULL && B->rows > 0 && B->columns > 0)) {
+        return 2;
+    }
+
+    // Проверка, подходят ли матрицы для умножения
+    if (A->columns == B->rows) {
+        int err = s21_create_matrix(A->rows, B->columns, result);
+        if (err == 0) {
             for (int i = 0; i < A->rows; i++) {
                 for (int j = 0; j < B->columns; j++) {
-                    result->matrix[i][j] = 0;
-                    for (int k = 0; k < A->columns; k++) {
+                    for (int k = 0; k < B->rows; k++) {
                         result->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j];
                     }
                 }
             }
-        } else {
-            return_code = 1;
         }
+        return err;
+    } else {
+        return 2;  // Размеры матриц не совпадают для умножения
     }
-
-    return return_code;
 }

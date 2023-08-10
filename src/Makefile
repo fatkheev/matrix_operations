@@ -26,6 +26,7 @@ rebuild: clean all
 
 clean: 
 	rm -rf *.o test *.a a.out *.gcno *.gcda test.dSYM *.info report
+	clear
 
 style_check:
 	clang-format -style=Google -n *.c *.h *.c
@@ -37,3 +38,9 @@ main:
 	$(CC) $(CFLAGS) -c func/*.c
 	$(CC) $(CFLAGS) main.c *.o -o main
 	./main
+
+val:
+	cd ../materials/build
+	
+valback:
+	cd ../../src

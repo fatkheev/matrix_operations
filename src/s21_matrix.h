@@ -46,4 +46,10 @@ int s21_calc_complements(matrix_t *A, matrix_t *result);
 // Обратная матрица (inverse_matrix):
 int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
-int is_True(matrix_t *matrix);
+
+
+#define SUCCESS 1
+#define FAILURE 0
+#define OK 0
+#define INCORRECT 1
+#define ERR 2

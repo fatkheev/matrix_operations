@@ -5,7 +5,7 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result) {
 
     if (A != NULL && A->matrix != NULL && A->rows >= 1 && A->columns >= 1) {
         res = 2;
-        double det;
+        double det = 0.0;
         s21_determinant(A, &det);
         if (fabs(det - 0) > 1e-7) {
             matrix_t temp;

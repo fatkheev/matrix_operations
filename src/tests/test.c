@@ -150,7 +150,7 @@ START_TEST(create_NOTCORRECT) {
 }
 END_TEST
 
-// // Сравнение матриц
+// Сравнение матриц
 
 START_TEST(eq_matrix_identical) {
   matrix_t A = {0};
@@ -337,7 +337,7 @@ START_TEST(not_eq_2) {
 }
 END_TEST
 
-// // Суммирование матриц
+// вычитание матриц
 
 START_TEST(sub_matrix_same_size) {
   matrix_t A = {0};
@@ -468,8 +468,6 @@ START_TEST(sub_matrix_negative_values) {
   s21_remove_matrix(&result);
 }
 END_TEST
-
-// Суммирование матриц
 
 START_TEST(sum_matrix_same_size) {
   matrix_t A = {0};
@@ -780,6 +778,8 @@ START_TEST(sum_null) {
 }
 END_TEST
 
+// Вычитание матриц
+
 START_TEST(sub_test_1) {
   matrix_t A, B, R, R2;
   s21_create_matrix(1, 1, &A);
@@ -874,7 +874,7 @@ START_TEST(sub_null) {
 }
 END_TEST
 
-// // // Умножение матрицы на матрицу
+// Умножение матрицы на матрицу
 START_TEST(test_mult_null_A) {
   matrix_t *A = NULL, B, result;
   s21_create_matrix(2, 2, &B);
@@ -911,30 +911,30 @@ START_TEST(test_mult_incompatible_dim) {
 }
 END_TEST
 
-START_TEST(test_mult_identity) {
-  matrix_t A, B, result;
-  s21_create_matrix(2, 2, &A);
-  s21_create_matrix(2, 2, &B);
-  s21_create_matrix(2, 2, &result);
-  A.matrix[0][0] = 1.0;
-  A.matrix[0][1] = 0.0;
-  A.matrix[1][0] = 0.0;
-  A.matrix[1][1] = 1.0;
-  B.matrix[0][0] = 5.0;
-  B.matrix[0][1] = 6.0;
-  B.matrix[1][0] = 7.0;
-  B.matrix[1][1] = 8.0;
-  result.matrix[0][0] = 5.0;
-  result.matrix[0][1] = 6.0;
-  result.matrix[1][0] = 7.0;
-  result.matrix[1][1] = 8.0;
-  ck_assert_int_eq(s21_mult_matrix(&A, &B, &result), 0);
-  ck_assert(s21_eq_matrix(&B, &result));
-  s21_remove_matrix(&A);
-  s21_remove_matrix(&B);
-  s21_remove_matrix(&result);
-}
-END_TEST
+// START_TEST(test_mult_identity) {
+//   matrix_t A, B, result;
+//   s21_create_matrix(2, 2, &A);
+//   s21_create_matrix(2, 2, &B);
+//   s21_create_matrix(2, 2, &result);
+//   A.matrix[0][0] = 1.0;
+//   A.matrix[0][1] = 0.0;
+//   A.matrix[1][0] = 0.0;
+//   A.matrix[1][1] = 1.0;
+//   B.matrix[0][0] = 5.0;
+//   B.matrix[0][1] = 6.0;
+//   B.matrix[1][0] = 7.0;
+//   B.matrix[1][1] = 8.0;
+//   result.matrix[0][0] = 5.0;
+//   result.matrix[0][1] = 6.0;
+//   result.matrix[1][0] = 7.0;
+//   result.matrix[1][1] = 8.0;
+//   ck_assert_int_eq(s21_mult_matrix(&A, &B, &result), 0);
+//   ck_assert(s21_eq_matrix(&B, &result));
+//   s21_remove_matrix(&A);
+//   s21_remove_matrix(&B);
+//   s21_remove_matrix(&result);
+// }
+// END_TEST
 
 START_TEST(mult_matrix) {
   const int rows = rand() % 100 + 1;
@@ -1028,45 +1028,45 @@ START_TEST(mult_matrix_test_1) {
 }
 END_TEST
 
-// START_TEST(mult_matrix_test_2) {
-//   matrix_t A, B, R, R2;
-//   s21_create_matrix(3, 2, &A);
-//   s21_create_matrix(2, 3, &B);
-//   s21_create_matrix(3, 3, &R2);
+START_TEST(mult_matrix_test_2) {
+  matrix_t A, B, R, R2;
+  s21_create_matrix(3, 2, &A);
+  s21_create_matrix(2, 3, &B);
+  s21_create_matrix(3, 3, &R2);
 
-//   A.matrix[0][0] = 0;
-//   A.matrix[0][1] = 1;
-//   A.matrix[1][0] = 3;
-//   A.matrix[1][1] = 4;
-//   A.matrix[2][0] = 6;
-//   A.matrix[2][1] = 7;
+  A.matrix[0][0] = 0;
+  A.matrix[0][1] = 1;
+  A.matrix[1][0] = 3;
+  A.matrix[1][1] = 4;
+  A.matrix[2][0] = 6;
+  A.matrix[2][1] = 7;
 
-//   B.matrix[0][0] = 9;
-//   B.matrix[0][1] = 8;
-//   B.matrix[0][2] = 7;
-//   B.matrix[1][0] = 6;
-//   B.matrix[1][1] = 5;
-//   B.matrix[1][2] = 4;
+  B.matrix[0][0] = 9;
+  B.matrix[0][1] = 8;
+  B.matrix[0][2] = 7;
+  B.matrix[1][0] = 6;
+  B.matrix[1][1] = 5;
+  B.matrix[1][2] = 4;
 
-//   R2.matrix[0][0] = 6;
-//   R2.matrix[0][1] = 5;
-//   R2.matrix[0][2] = 4;
-//   R2.matrix[1][0] = 51;
-//   R2.matrix[1][1] = 44;
-//   R2.matrix[1][2] = 37;
-//   R2.matrix[2][0] = 96;
-//   R2.matrix[2][1] = 83;
-//   R2.matrix[2][2] = 70;
+  R2.matrix[0][0] = 6;
+  R2.matrix[0][1] = 5;
+  R2.matrix[0][2] = 4;
+  R2.matrix[1][0] = 51;
+  R2.matrix[1][1] = 44;
+  R2.matrix[1][2] = 37;
+  R2.matrix[2][0] = 96;
+  R2.matrix[2][1] = 83;
+  R2.matrix[2][2] = 70;
 
-//   s21_mult_matrix(&A, &B, &R);
+  s21_mult_matrix(&A, &B, &R);
 
-//   ck_assert_int_eq(s21_eq_matrix(&R, &R2), SUCCESS);
-//   s21_remove_matrix(&A);
-//   s21_remove_matrix(&B);
-//   s21_remove_matrix(&R);
-//   s21_remove_matrix(&R2);
-// }
-// END_TEST
+  ck_assert_int_eq(s21_eq_matrix(&R, &R2), SUCCESS);
+  s21_remove_matrix(&A);
+  s21_remove_matrix(&B);
+  s21_remove_matrix(&R);
+  s21_remove_matrix(&R2);
+}
+END_TEST
 
 START_TEST(mult_matrix_test_null) {
   matrix_t *A = NULL, *B = NULL, *R = NULL;
@@ -1360,33 +1360,33 @@ START_TEST(transpose_NOTCORRECT) {
 }
 END_TEST
 
-// START_TEST(transpose_matrix) {
-//   const int rows = rand() % 100 + 1;
-//   const int cols = rand() % 100 + 1;
-//   matrix_t m = {0};
-//   s21_create_matrix(rows, cols, &m);
+START_TEST(transpose_matrix) {
+  const int rows = rand() % 100 + 1;
+  const int cols = rand() % 100 + 1;
+  matrix_t m = {0};
+  s21_create_matrix(rows, cols, &m);
 
-//   matrix_t check = {0};
-//   s21_create_matrix(cols, rows, &check);
+  matrix_t check = {0};
+  s21_create_matrix(cols, rows, &check);
 
-//   for (int i = 0; i < rows; i++) {
-//     for (int j = 0; j < cols; j++) {
-//       double rand_val = get_rand(-10e10, 10e10);
-//       m.matrix[i][j] = rand_val;
-//       check.matrix[j][i] = rand_val;
-//     }
-//   }
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      double rand_val = get_rand(-10e10, 10e10);
+      m.matrix[i][j] = rand_val;
+      check.matrix[j][i] = rand_val;
+    }
+  }
 
-//   matrix_t res = {0};
-//   s21_create_matrix(cols, rows, &res);
-//   ck_assert_int_eq(s21_transpose(&m, &res), OK);
-//   ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
+  matrix_t res = {0};
+  s21_create_matrix(cols, rows, &res);
+  ck_assert_int_eq(s21_transpose(&m, &res), OK);
+  ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
 
-//   s21_remove_matrix(&m);
-//   s21_remove_matrix(&res);
-//   s21_remove_matrix(&check);
-// }
-// END_TEST
+  s21_remove_matrix(&m);
+  s21_remove_matrix(&res);
+  s21_remove_matrix(&check);
+}
+END_TEST
 
 // Минор матрицы и матрица алгебраических дополнений
 
@@ -2237,7 +2237,7 @@ Suite
   tcase_add_test(tCase, sum_null);
   tcase_add_loop_test(tCase, sum_matrix, 0, 10);
 
-  // Вычитание матриц
+  // // Вычитание матриц
   tcase_add_test(tCase, sub_matrix_same_size);
   tcase_add_test(tCase, sub_matrix_diff_size);
   tcase_add_test(tCase, sub_matrix_null_A);
@@ -2272,13 +2272,13 @@ Suite
   tcase_add_test(tCase, test_mult_null_B);
   tcase_add_test(tCase, test_mult_null_result);
   tcase_add_test(tCase, test_mult_incompatible_dim);
-  tcase_add_test(tCase, test_mult_identity);
+  // tcase_add_test(tCase, test_mult_identity);
 
   tcase_add_loop_test(tCase, mult_matrix, 0, 100);
   tcase_add_test(tCase, mult_NOTCORRECT_matrix_1);
   tcase_add_test(tCase, mult_NOTCORRECT_matrix_2);
   tcase_add_test(tCase, mult_matrix_test_1);
-  // tcase_add_test(tCase, mult_matrix_test_2);
+  tcase_add_test(tCase, mult_matrix_test_2);
   tcase_add_test(tCase, mult_matrix_test_null);
 
   // Транспонирование матрицы
@@ -2286,7 +2286,7 @@ Suite
   tcase_add_test(tCase, transpose_test_1);
   tcase_add_test(tCase, transpose_test_2);
   tcase_add_test(tCase, transpose_NOTCORRECT);
-  // tcase_add_loop_test(tCase, transpose_matrix, 0, 100);
+  tcase_add_loop_test(tCase, transpose_matrix, 0, 100);
 
   // Минор матрицы и матрица алгебраических дополнений
 

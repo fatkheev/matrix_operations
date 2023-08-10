@@ -1,6 +1,6 @@
 CC = gcc
 TESTFLAGS = -lcheck -g
-CFLAGS = -Wall -Wextra -Werror -std=c11 -I /opt/homebrew/Cellar/check/0.15.2/include -L/opt/homebrew/lib -lcheck
+CFLAGS = -Wall -Wextra -Werror -std=c11 -lcheck
 TESTFLAGS2 = -lcheck -lm -lpthread -lrt -lsubunit -g
 GCOVFLAGS = -fprofile-arcs -ftest-coverage
 
@@ -39,8 +39,5 @@ main:
 	$(CC) $(CFLAGS) main.c *.o -o main
 	./main
 
-val:
-	cd ../materials/build
-	
-valback:
-	cd ../../src
+valgrind: clean
+	make test && CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --read-var-info=yes ./test

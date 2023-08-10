@@ -1360,33 +1360,33 @@ START_TEST(transpose_NOTCORRECT) {
 }
 END_TEST
 
-// START_TEST(transpose_matrix) {
-//   const int rows = rand() % 100 + 1;
-//   const int cols = rand() % 100 + 1;
-//   matrix_t m = {0};
-//   s21_create_matrix(rows, cols, &m);
+START_TEST(transpose_matrix) {
+  const int rows = rand() % 100 + 1;
+  const int cols = rand() % 100 + 1;
+  matrix_t m = {0};
+  s21_create_matrix(rows, cols, &m);
 
-//   matrix_t check = {0};
-//   s21_create_matrix(cols, rows, &check);
+  matrix_t check = {0};
+  s21_create_matrix(cols, rows, &check);
 
-//   for (int i = 0; i < rows; i++) {
-//     for (int j = 0; j < cols; j++) {
-//       double rand_val = get_rand(-10e10, 10e10);
-//       m.matrix[i][j] = rand_val;
-//       check.matrix[j][i] = rand_val;
-//     }
-//   }
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      double rand_val = get_rand(-10e10, 10e10);
+      m.matrix[i][j] = rand_val;
+      check.matrix[j][i] = rand_val;
+    }
+  }
 
-//   matrix_t res = {0};
-//   s21_create_matrix(cols, rows, &res);
-//   ck_assert_int_eq(s21_transpose(&m, &res), OK);
-//   ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
+  matrix_t res = {0};
+  s21_create_matrix(cols, rows, &res);
+  ck_assert_int_eq(s21_transpose(&m, &res), OK);
+  ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
 
-//   s21_remove_matrix(&m);
-//   s21_remove_matrix(&res);
-//   s21_remove_matrix(&check);
-// }
-// END_TEST
+  s21_remove_matrix(&m);
+  s21_remove_matrix(&res);
+  s21_remove_matrix(&check);
+}
+END_TEST
 
 // Минор матрицы и матрица алгебраических дополнений
 
@@ -2286,7 +2286,7 @@ Suite
   tcase_add_test(tCase, transpose_test_1);
   tcase_add_test(tCase, transpose_test_2);
   tcase_add_test(tCase, transpose_NOTCORRECT);
-  // tcase_add_loop_test(tCase, transpose_matrix, 0, 100);
+  tcase_add_loop_test(tCase, transpose_matrix, 0, 100);
 
   // Минор матрицы и матрица алгебраических дополнений
 

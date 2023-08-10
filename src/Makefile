@@ -12,7 +12,7 @@ s21_matrix.a : func/*.c
 	rm -rf *.o
 
 test: clean tests/test.c func/*.c
-	$(CC) $(CFLAGS) tests/test.c func/*.c -o test $(TESTFLAGS)
+	$(CC) $(CFLAGS) tests/test.c func/*.c -g -o test $(TESTFLAGS)
 	./test
 
 gcov_report:
@@ -40,4 +40,7 @@ main:
 	./main
 
 valgrind: clean
-	make test && CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --read-var-info=yes ./test
+	make test && CK_FORK=no valgrind --vgdb=no --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes --verbose --read-var-info=yes ./test
+
+leaks: clean
+	make test && leaks -atExit -- ./test

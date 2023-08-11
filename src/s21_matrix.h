@@ -1,7 +1,7 @@
 #include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #define OK 0
 #define NOTCORRECT 1

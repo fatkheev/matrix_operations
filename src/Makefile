@@ -29,10 +29,10 @@ clean:
 	clear
 
 style_check:
-	clang-format -style=Google -n *.c *.h *.c
+	find . -name "*.c" -o -name "*.h" | xargs clang-format -style=Google -n
 
 style:
-	clang-format -style=Google -i *.c *.h *.c
+	find . -name "*.c" -o -name "*.h" | xargs clang-format -style=Google -i
 
 main:
 	$(CC) $(CFLAGS) -c func/*.c

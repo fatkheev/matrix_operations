@@ -1,13 +1,11 @@
 #include "../s21_matrix.h"
 
-int s21_create_matrix(int rows, int columns, matrix_t *result)
-{
+int s21_create_matrix(int rows, int columns, matrix_t *result) {
   int return_code = 0;
 
   if (rows < 1 || columns < 1 || result == NULL) {
     return_code = 1;
-  }
-  else {
+  } else {
     result->rows = rows;
     result->columns = columns;
 
@@ -15,15 +13,13 @@ int s21_create_matrix(int rows, int columns, matrix_t *result)
 
     if (!result->matrix) {
       return_code = 2;
-    }
-    else {
+    } else {
       for (int i = 0; i < rows && return_code == 0; i++) {
         result->matrix[i] = (double *)malloc(columns * sizeof(double));
 
         if (!result->matrix[i]) {
           return_code = 2;
-        }
-        else {
+        } else {
           for (int j = 0; j < columns; j++) {
             result->matrix[i][j] = 0.0;
           }
@@ -31,6 +27,6 @@ int s21_create_matrix(int rows, int columns, matrix_t *result)
       }
     }
   }
-  
+
   return return_code;
 }

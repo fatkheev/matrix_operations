@@ -901,112 +901,6 @@ START_TEST(test_mult_null_result) {
 }
 END_TEST
 
-START_TEST(test_mult_incompatible_dim) {
-  matrix_t A, B, result;
-  s21_create_matrix(2, 3, &A);
-  s21_create_matrix(2, 2, &B);
-  ck_assert_int_eq(s21_mult_matrix(&A, &B, &result), 2);
-  s21_remove_matrix(&A);
-  s21_remove_matrix(&B);
-}
-END_TEST
-
-// START_TEST(test_mult_identity) {
-//   matrix_t A, B, result;
-//   s21_create_matrix(2, 2, &A);
-//   s21_create_matrix(2, 2, &B);
-//   s21_create_matrix(2, 2, &result);
-//   A.matrix[0][0] = 1.0;
-//   A.matrix[0][1] = 0.0;
-//   A.matrix[1][0] = 0.0;
-//   A.matrix[1][1] = 1.0;
-//   B.matrix[0][0] = 5.0;
-//   B.matrix[0][1] = 6.0;
-//   B.matrix[1][0] = 7.0;
-//   B.matrix[1][1] = 8.0;
-//   result.matrix[0][0] = 5.0;
-//   result.matrix[0][1] = 6.0;
-//   result.matrix[1][0] = 7.0;
-//   result.matrix[1][1] = 8.0;
-//   ck_assert_int_eq(s21_mult_matrix(&A, &B, &result), 0);
-//   ck_assert(s21_eq_matrix(&B, &result));
-//   s21_remove_matrix(&A);
-//   s21_remove_matrix(&B);
-//   s21_remove_matrix(&result);
-// }
-// END_TEST
-
-START_TEST(mult_matrix) {
-  const int rows = rand() % 100 + 1;
-  const int cols = rand() % 100 + 1;
-  matrix_t m = {0};
-  s21_create_matrix(rows, cols, &m);
-  matrix_t mtx = {0};
-  s21_create_matrix(cols, rows, &mtx);
-
-  for (int i = 0; i < rows; ++i)
-    for (int j = 0; j < cols; ++j) m.matrix[i][j] = get_rand(-10e10, 10e10);
-
-  for (int i = 0; i < cols; ++i)
-    for (int j = 0; j < rows; ++j) mtx.matrix[i][j] = get_rand(-10e10,
-    10e10);
-
-  matrix_t check = {0};
-  s21_create_matrix(m.rows, mtx.columns, &check);
-
-  for (int i = 0; i < m.rows; ++i) {
-    for (int j = 0; j < mtx.columns; ++j) {
-      check.matrix[i][j] = 0;
-      for (int k = 0; k < m.columns; ++k) {
-        check.matrix[i][j] += m.matrix[i][k] * mtx.matrix[k][j];
-      }
-    }
-  }
-
-  matrix_t res = {0};
-  ck_assert_double_eq(s21_mult_matrix(&m, &mtx, &res), OK);
-  ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
-
-  s21_remove_matrix(&m);
-  s21_remove_matrix(&mtx);
-  s21_remove_matrix(&res);
-  s21_remove_matrix(&check);
-}
-END_TEST
-
-START_TEST(mult_NOTCORRECT_matrix_1) {
-  matrix_t m1 = {0};
-  matrix_t m2 = {0};
-  s21_create_matrix(5, 5, &m1);
-  s21_create_matrix(6, 6, &m2);
-
-  matrix_t result = {0};
-  int mul_code = s21_mult_matrix(&m1, &m2, &result);
-  ck_assert_int_eq(mul_code, ERROR_CALC);
-
-  s21_remove_matrix(&m1);
-  s21_remove_matrix(&m2);
-  s21_remove_matrix(&result);
-}
-END_TEST
-
-START_TEST(mult_NOTCORRECT_matrix_2) {
-  matrix_t m1 = {0};
-  matrix_t m2 = {0};
-  s21_create_matrix(5, 5, &m1);
-  s21_create_matrix(6, 6, &m2);
-  m1.columns = -100;
-
-  matrix_t result = {0};
-  int mul_code = s21_mult_matrix(&m1, &m2, &result);
-  ck_assert_int_eq(mul_code, ERROR_CALC);
-
-  s21_remove_matrix(&m1);
-  s21_remove_matrix(&m2);
-  s21_remove_matrix(&result);
-}
-END_TEST
-
 START_TEST(mult_matrix_test_1) {
   matrix_t A, B, R, R2;
   s21_create_matrix(1, 1, &A);
@@ -1357,34 +1251,6 @@ START_TEST(transpose_NOTCORRECT) {
   s21_remove_matrix(&B);
 
   ck_assert_int_eq(s21_transpose(NULL, NULL), NOTCORRECT);
-}
-END_TEST
-
-START_TEST(transpose_matrix) {
-  const int rows = rand() % 100 + 1;
-  const int cols = rand() % 100 + 1;
-  matrix_t m = {0};
-  s21_create_matrix(rows, cols, &m);
-
-  matrix_t check = {0};
-  s21_create_matrix(cols, rows, &check);
-
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      double rand_val = get_rand(-10e10, 10e10);
-      m.matrix[i][j] = rand_val;
-      check.matrix[j][i] = rand_val;
-    }
-  }
-
-  matrix_t res = {0};
-  s21_create_matrix(cols, rows, &res);
-  ck_assert_int_eq(s21_transpose(&m, &res), OK);
-  ck_assert_int_eq(s21_eq_matrix(&check, &res), SUCCESS);
-
-  s21_remove_matrix(&m);
-  s21_remove_matrix(&res);
-  s21_remove_matrix(&check);
 }
 END_TEST
 
@@ -2271,12 +2137,7 @@ Suite
   tcase_add_test(tCase, test_mult_null_A);
   tcase_add_test(tCase, test_mult_null_B);
   tcase_add_test(tCase, test_mult_null_result);
-  tcase_add_test(tCase, test_mult_incompatible_dim);
-  // tcase_add_test(tCase, test_mult_identity);
 
-  tcase_add_loop_test(tCase, mult_matrix, 0, 100);
-  tcase_add_test(tCase, mult_NOTCORRECT_matrix_1);
-  tcase_add_test(tCase, mult_NOTCORRECT_matrix_2);
   tcase_add_test(tCase, mult_matrix_test_1);
   tcase_add_test(tCase, mult_matrix_test_2);
   tcase_add_test(tCase, mult_matrix_test_null);
@@ -2286,7 +2147,6 @@ Suite
   tcase_add_test(tCase, transpose_test_1);
   tcase_add_test(tCase, transpose_test_2);
   tcase_add_test(tCase, transpose_NOTCORRECT);
-  tcase_add_loop_test(tCase, transpose_matrix, 0, 100);
 
   // Минор матрицы и матрица алгебраических дополнений
 

@@ -17,14 +17,14 @@ int s21_determinant(matrix_t *A, double *result) {
   }
 
   *result = 0.0;
-
   for (int j = 0; j < n; j++) {
     double minor_val;
-    if (s21_minor(A, 0, j, &minor_val) != 0) {
-      return 1;
+    int ret = s21_minor(A, 0, j, &minor_val);
+    if (ret != 0) {
+      return ret;
     }
 
-    *result += A->matrix[0][j] * ((0 + j) % 2 == 0 ? 1 : -1) * minor_val;
+    *result += A->matrix[0][j] * ((0 + j) % 2 == 0 ? minor_val : -minor_val);
   }
 
   return 0;
